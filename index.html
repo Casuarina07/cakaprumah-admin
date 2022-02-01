@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./public/main.css" type="text/css" />
+    <title>Firebase App</title>
+  </head>
+  <body>
+    <span id="openNav"> &#9776; Menu</span>
+    <nav class="sidenav">
+      <ul>
+        <li>
+          <h2>Firebase App</h2>
+        </li>
+        <a href="#" class="closebtn" id="closeNav">&times;</a>
+        <li><a href="create.html">New Post</a></li>
+      </ul>
+    </nav>
+
+    <header>
+      <h1>Firebase App</h1>
+    </header>
+
+    <main id="main">
+      <div id="posts"></div>
+    </main>
+
+    <!-- <script src="https://www.gstatic.com/firebasejs/9.6.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.5/firebase-firestore.js"></script>
+    <script>
+      const firebaseApp = firebase.initializeApp({
+        apiKey: "AIzaSyCEVsUFIsT74A_dTl8UaCMyJmxBMtRDwyY",
+        authDomain: "freelance-trial.firebaseapp.com",
+        projectId: "freelance-trial",
+        storageBucket: "freelance-trial.appspot.com",
+        messagingSenderId: "333533410713",
+        appId: "1:333533410713:web:0553e41275ed7d78a10f08",
+        measurementId: "G-YLPPNTZZTC",
+      });
+      const db = firebaseApp.firestore();
+      const auth = firebaseApp.auth();
+    </script> -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.5/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.5/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.5/firebase-auth-compat.js"></script>
+    <!-- <script>
+      const firebaseApp = firebase.initializeApp({
+        apiKey: "AIzaSyCEVsUFIsT74A_dTl8UaCMyJmxBMtRDwyY",
+        authDomain: "freelance-trial.firebaseapp.com",
+        projectId: "freelance-trial",
+        storageBucket: "freelance-trial.appspot.com",
+        messagingSenderId: "333533410713",
+        appId: "1:333533410713:web:0553e41275ed7d78a10f08",
+        measurementId: "G-YLPPNTZZTC",
+      });
+      const db = firebaseApp.firestore();
+      const auth = firebaseApp.auth();
+    </script> -->
+    <script src="./functions/main.js"></script>
+  </body>
+</html>
