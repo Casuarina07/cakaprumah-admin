@@ -1,12 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Posts</title>
+  </head>
+  <body>
+    <div class="toggler">
+      <span id="openNav"> &#9776; Menu</span>
+    </div>
+    <nav class="sidenav">
+      <ul>
+        <li>
+          <h2>Firebase App</h2>
+        </li>
+        <a href="#" class="closebtn" id="closeNav">&times;</a>
+        <li><a href="create.html">New Post</a></li>
+      </ul>
+    </nav>
+
+    <header>
+      <h1>Firebase App</h1>
+    </header>
+
+    <main id="main">
+      <div id="posts"></div>
+    </main>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.5/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.5/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.5/firebase-auth-compat.js"></script>
+    <script src="./functions/main.js"></script>
+  </body>
 </html>
