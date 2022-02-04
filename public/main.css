@@ -80,6 +80,29 @@ main {
   cursor: pointer;
 }
 
+#createForm #title {
+  padding: 10px 10px;
+  width: 80%;
+}
+
+#createForm textarea {
+  padding: 10px 15px;
+  width: 80%;
+}
+
+#postSubmit {
+  padding: 10px 20px;
+  border-radius: 5px;
+  border-style: none;
+  background-color: rgb(120, 122, 122);
+  color: #eee;
+}
+
+#postSubmit:hover {
+  background-color: rgb(214, 214, 214);
+  color: rgb(68, 68, 68);
+}
+
 #posts {
   width: 100%;
   display: flex;
