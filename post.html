@@ -4,19 +4,29 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Posts</title>
+    <link rel="stylesheet" href="./public/main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&family=Poppins:wght@200&display=swap"
+      rel="stylesheet"
+    />
+    <title>Post</title>
   </head>
   <body>
     <div class="toggler">
       <span id="openNav"> &#9776; Menu</span>
     </div>
-    <nav class="sidenav">
+    <nav id="nav" class="sidenav">
       <ul>
+        <h2>Firebase App</h2>
+        <a href="#" class="closebtn" id="closeNav">&times; </a>
         <li>
-          <h2>Firebase App</h2>
+          <a href="index.html">Home Page</a>
         </li>
-        <a href="#" class="closebtn" id="closeNav">&times;</a>
-        <li><a href="create.html">New Post</a></li>
+        <li>
+          <a href="create.html">New Post</a>
+        </li>
       </ul>
     </nav>
 
@@ -24,8 +34,23 @@
       <h1>Firebase App</h1>
     </header>
 
-    <main id="main">
-      <div id="posts"></div>
+    <main id="main" class="postContainer">
+      <div class="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <div id="loading">Loading....</div>
+
+      <div id="singlePost"></div>
+      <div id="buttons">
+        <button id="edit">Edit</button>
+
+        <button id="delete">Delete</button>
+      </div>
+
+      <div id="editFormContainer"></div>
     </main>
 
     <script src="https://www.gstatic.com/firebasejs/9.6.5/firebase-app-compat.js"></script>

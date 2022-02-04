@@ -104,6 +104,7 @@ if (createForm != null) {
 //Check if the DOM is full loaded
 document.addEventListener("DOMContentLoaded", (e) => {
   getPosts();
+  getPost();
 });
 
 const openNav = document.querySelector("#openNav");
@@ -141,18 +142,95 @@ const createChildren = async (arr) => {
   //check if the post element is in the current HTML
   if (posts != null) {
     arr.map((post) => {
+      console.log("what is this now: ", post.data.content);
+
       let div = document.createElement("div");
       let cover = document.createElement("div");
       let anchor = document.createElement("a");
       let anchorNode = document.createTextNode(post.data.title);
       anchor.setAttribute("href", "post.html#/" + post.id);
-
       anchor.appendChild(anchorNode);
+      let content = document.createElement("p");
+      content.innerText = post.data.content;
+
       cover.style.backgroundImage = "url(" + post.data.postImage + ")";
       div.classList.add("post");
       div.appendChild(cover);
       div.appendChild(anchor);
+      div.appendChild(content);
       posts.appendChild(div);
     });
+  }
+};
+
+//INDIVIDUAL POST BY ID - post.html #4 Youtube Video
+const loading = document.querySelector("#loading");
+const loader = document.querySelector(".lds-ring");
+const deleteButton = document.querySelector("#delete");
+const editButton = document.querySelector("#edit");
+const singlePost = document.querySelector("#singlePost");
+
+const getPost = async () => {
+  let postID = getPostIDFromURL();
+
+  //if loading element exist in the current HTML document
+  if (loading != null) {
+    // loading.style.display = "block";
+    loader.style.display = "inline-block";
+  }
+
+  let post = await firebase
+    .firestore()
+    .collection("posts")
+    .doc(postID)
+    .get()
+    .catch((err) => console.log(err));
+
+  if (loading != null) {
+    loading.style.display = "none";
+    loader.style.display = "none";
+  }
+
+  if (post != null && deleteButton != null) {
+    deleteButton.style.display = "block";
+  }
+
+  if (post != null && editButton != null) {
+    editButton.style.display = "block";
+  }
+
+  createChild(post.data());
+};
+
+const getPostIDFromURL = () => {
+  let postLocation = window.location.href; //the whole link
+  let hrefArray = postLocation.split("/");
+  console.log("hrefArray: ", hrefArray);
+  let postID = hrefArray.slice(-1).pop(); //last value
+  console.log("postID: ", postID);
+
+  return postID;
+};
+
+const createChild = (postData) => {
+  if (singlePost != null) {
+    let div = document.createElement("div");
+    let img = document.createElement("img");
+    img.setAttribute("src", postData.postImage);
+    img.setAttribute("loading", "lazy");
+
+    let title = document.createElement("h3");
+    let titleNode = document.createTextNode(postData.title);
+    title.appendChild(titleNode);
+
+    let content = document.createElement("div");
+    let contentNode = document.createTextNode(postData.content);
+    content.appendChild(contentNode);
+
+    div.appendChild(img);
+    div.appendChild(title);
+    div.appendChild(content);
+
+    singlePost.appendChild(div);
   }
 };
