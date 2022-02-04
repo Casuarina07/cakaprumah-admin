@@ -12,7 +12,7 @@ firebase.initializeApp(config);
 
 const firestore = firebase.firestore();
 
-//CREATE POST
+//CREATE POST - #2 Youtube Video
 const createForm = document.querySelector("#createForm");
 const progressBar = document.querySelector("#progressBar");
 const progressHandler = document.querySelector("#progressHandler");
@@ -78,15 +78,12 @@ if (createForm != null) {
       });
 
       const fileRef = await firebase.storage().refFromURL(d);
-      // console.log("what is this: ", fileRef);
-      // console.log("what is this: ", fileRef._delegate._location.path_);
-      
+
       let post = {
         title,
         content,
         postImage: d, //https://firebase/image.jpg - where firebase stored the image
-        // fileref: fileRef.location.path, //image.jpg
-        fileref: fileRef._delegate._location.path_,
+        fileref: fileRef._delegate._location.path_, //image.jpg
       };
 
       await firebase.firestore().collection("posts").add(post);
@@ -101,3 +98,61 @@ if (createForm != null) {
     }
   });
 }
+
+//NAVIGATION BAR and RETRIEVING POSTS - #3 Youtube Video
+
+//Check if the DOM is full loaded
+document.addEventListener("DOMContentLoaded", (e) => {
+  getPosts();
+});
+
+const openNav = document.querySelector("#openNav");
+const closeNav = document.querySelector("#closeNav");
+
+openNav.addEventListener("click", (e) => {
+  document.getElementById("nav").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+});
+
+closeNav.addEventListener("click", (e) => {
+  e.preventDefault(); //because closeNav is a link - to prevent it from refreshing need to preventDefault
+  document.getElementById("nav").style.width = "0px";
+  document.getElementById("main").style.marginLeft = "";
+});
+
+const posts = document.querySelector("#posts");
+
+const getPosts = async () => {
+  let postsArray = [];
+  let docs = await firebase
+    .firestore()
+    .collection("posts")
+    .get()
+    .catch((err) => console.log(err));
+
+  docs.forEach((doc) => {
+    postsArray.push({ id: doc.id, data: doc.data() });
+  });
+
+  createChildren(postsArray);
+};
+
+const createChildren = async (arr) => {
+  //check if the post element is in the current HTML
+  if (posts != null) {
+    arr.map((post) => {
+      let div = document.createElement("div");
+      let cover = document.createElement("div");
+      let anchor = document.createElement("a");
+      let anchorNode = document.createTextNode(post.data.title);
+      anchor.setAttribute("href", "post.html#/" + post.id);
+
+      anchor.appendChild(anchorNode);
+      cover.style.backgroundImage = "url(" + post.data.postImage + ")";
+      div.classList.add("post");
+      div.appendChild(cover);
+      div.appendChild(anchor);
+      posts.appendChild(div);
+    });
+  }
+};

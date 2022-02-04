@@ -5,10 +5,69 @@ body {
   font-family: "Montserrat", sans-serif;
 }
 
+body * {
+  transition: all 0.5s ease-in-out;
+}
+
 .toggler {
   padding: 12px;
   background-color: #222;
   color: aliceblue;
+}
+
+header {
+  height: 70px;
+  position: relative;
+  z-index: -1;
+  background-color: rgb(192, 192, 192);
+  margin-top: -20px;
+  color: rgb(58, 58, 58);
+}
+
+header h1 {
+  padding-top: 20px;
+  padding-left: 10px;
+}
+
+main {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.sidenav {
+  height: 100%;
+  width: 0px;
+  position: fixed;
+  z-index: 1;
+  top: 0px;
+  left: 0px;
+  background: #222;
+  overflow-x: hidden;
+  padding-top: 30px;
+  color: aliceblue;
+}
+
+.sidenav h2 {
+  color: #eee;
+}
+
+.sidenav a {
+  padding: 10px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #eee;
+  display: block;
+}
+
+.sidenav a:hover {
+  color: royalblue;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0px;
+  right: 25px;
+  font-size: 36px;
 }
 
 #openNav {
@@ -18,4 +77,29 @@ body {
   font-weight: bold;
   background-color: rgb(59, 59, 59);
   cursor: pointer;
+}
+
+#posts {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.post {
+  width: 100%;
+  max-width: 400px;
+  margin: 10px;
+  border: 5px solid;
+}
+
+.post > div {
+  display: block;
+  height: 350px;
+  background-size: 100%;
+}
+
+.post > div:hover {
+  background-size: 120%;
 }
