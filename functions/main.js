@@ -169,6 +169,7 @@ const loader = document.querySelector(".lds-ring");
 const deleteButton = document.querySelector("#delete");
 const editButton = document.querySelector("#edit");
 const singlePost = document.querySelector("#singlePost");
+const buttonsContainer = document.querySelector("#buttons"); //both the delete and edit button
 
 const getPost = async () => {
   let postID = getPostIDFromURL();
@@ -213,6 +214,8 @@ const getPostIDFromURL = () => {
 };
 
 const createChild = (postData) => {
+  let editButton = document.querySelector("#edit");
+
   if (singlePost != null) {
     let div = document.createElement("div");
     let img = document.createElement("img");
@@ -232,5 +235,22 @@ const createChild = (postData) => {
     div.appendChild(content);
 
     singlePost.appendChild(div);
+
+    //If edit button, display the form
+    editButton.addEventListener("click", (e) => {
+      appendEditForm(postData);
+    });
   }
+};
+
+//EDITING POSTS - #5 Youtube Video
+const appendEditForm = (postData) => {
+  console.log("Passed: ", postData);
+  let editFormContainer = document.querySelector("#editFormContainer");
+  editFormContainer.style.display = "block";
+  singlePost.style.display = "none";
+  buttonsContainer.style.display = "none";
+  document.getElementById("editTitle").value = postData.title;
+  document.getElementById("editContent").value = postData.content;
+  document.getElementById("oldImage").value = postData.fileref;
 };

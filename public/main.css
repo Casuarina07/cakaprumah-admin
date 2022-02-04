@@ -85,6 +85,33 @@ main {
   width: 80%;
 }
 
+#editFormContainer {
+  display: none;
+}
+
+#editForm textarea {
+  padding: 10px 15px;
+  width: 80%;
+}
+
+#editForm #editTitle {
+  padding: 10px 10px;
+  width: 80%;
+}
+
+#editSubmit {
+  padding: 10px 20px;
+  border-radius: 5px;
+  border-style: none;
+  background-color: rgb(120, 122, 122);
+  color: #eee;
+}
+
+#editSubmit:hover {
+  background-color: rgb(214, 214, 214);
+  color: rgb(68, 68, 68);
+}
+
 #createForm textarea {
   padding: 10px 15px;
   width: 80%;

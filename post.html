@@ -50,7 +50,22 @@
         <button id="delete">Delete</button>
       </div>
 
-      <div id="editFormContainer"></div>
+      <div id="editFormContainer">
+        <form method="POST" id="editForm" action="post.html">
+          <p>Fill the respective fields to update post</p>
+          <input type="text" id="editTitle" />
+          <br />
+          <br />
+          <textarea id="editContent" cols="30" rows="10"></textarea>
+          <br />
+          <br />
+          <input type="file" id="editImage" accept="image/x-png,image/jpeg" />
+          <input type="hidden" id="oldImage" />
+          <br />
+          <br />
+          <input type="submit" name="" id="editSubmit" value="Update Post" />
+        </form>
+      </div>
     </main>
 
     <script src="https://www.gstatic.com/firebasejs/9.6.5/firebase-app-compat.js"></script>
