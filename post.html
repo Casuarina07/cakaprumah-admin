@@ -65,12 +65,18 @@
           <br />
           <input type="submit" name="" id="editSubmit" value="Update Post" />
         </form>
+        <div id="editProgressHandler">
+          <p>Processing request...</p>
+          <progress id="editProgressBar" value="" max="100"></progress>
+        </div>
       </div>
     </main>
 
     <script src="https://www.gstatic.com/firebasejs/9.6.5/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.5/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.5/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.5/firebase-storage-compat.js"></script>
+
     <script src="./functions/main.js"></script>
   </body>
 </html>

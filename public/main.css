@@ -105,6 +105,7 @@ main {
   border-style: none;
   background-color: rgb(120, 122, 122);
   color: #eee;
+  cursor: pointer;
 }
 
 #editSubmit:hover {
@@ -144,7 +145,7 @@ main {
   height: 420px;
   margin: 10px;
   padding: 10px;
-  border: 5px solid;
+  /* border: 5px solid; */
   word-wrap: break-word;
   overflow: hidden;
 }

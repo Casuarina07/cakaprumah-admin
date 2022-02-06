@@ -142,7 +142,6 @@ const createChildren = async (arr) => {
   //check if the post element is in the current HTML
   if (posts != null) {
     arr.map((post) => {
-      console.log("what is this now: ", post.data.content);
 
       let div = document.createElement("div");
       let cover = document.createElement("div");
@@ -215,6 +214,7 @@ const getPostIDFromURL = () => {
 
 const createChild = (postData) => {
   let editButton = document.querySelector("#edit");
+  let deleteButton = document.querySelector("#delete");
 
   if (singlePost != null) {
     let div = document.createElement("div");
@@ -240,12 +240,17 @@ const createChild = (postData) => {
     editButton.addEventListener("click", (e) => {
       appendEditForm(postData);
     });
+
+    //if delete button is clicked
+    deleteButton.addEventListener("click", (e) => {
+      deletePost();
+    });
   }
 };
 
-//EDITING POSTS - #5 Youtube Video
+//EDITING POSTS - #5, #6 Youtube Video
 const appendEditForm = (postData) => {
-  console.log("Passed: ", postData);
+  console.log("entered appendEditForm");
   let editFormContainer = document.querySelector("#editFormContainer");
   editFormContainer.style.display = "block";
   singlePost.style.display = "none";
@@ -253,4 +258,121 @@ const appendEditForm = (postData) => {
   document.getElementById("editTitle").value = postData.title;
   document.getElementById("editContent").value = postData.content;
   document.getElementById("oldImage").value = postData.fileref;
+  const editProgressHandler = document.querySelector("#editProgressHandler");
+  const editProgressBar = document.querySelector("#editProgressBar");
+
+  const editSubmit = document.querySelector("#editSubmit");
+  editSubmit.addEventListener("click", async (e) => {
+    e.preventDefault();
+    console.log("edit submit button triggered");
+    const postId = await getPostIDFromURL();
+
+    if (
+      document.getElementById("editTitle").value != "" &&
+      document.getElementById("editContent").value != ""
+    ) {
+      console.log("none is empty");
+      if (document.getElementById("editImage").files[0] != undefined) {
+        console.log("entered here");
+        const image = document.getElementById("editImage").files[0];
+        const storageRef = firebase.storage().ref();
+        const storageChild = storageRef.child(image.name);
+        console.log("updating image...");
+        const postImage = storageChild.put(image);
+        let d;
+
+        await new Promise((resolve) => {
+          postImage.on(
+            "state_changed",
+            (snapshot) => {
+              let progress =
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              console.log(Math.trunc(progress));
+              if (editProgressHandler != null) {
+                editProgressHandler.style.display = true;
+              }
+              if (editSubmit != null) {
+                editSubmit.disabled = true;
+              }
+              //see the progressBar moving
+              if (editProgressBar != null) {
+                editProgressBar.value = progress;
+              }
+            },
+            (error) => {
+              //error
+              console.log("Error", error);
+            },
+            async () => {
+              const downloadURL = await storageChild.getDownloadURL();
+              d = downloadURL;
+              console.log(d);
+              resolve();
+            }
+          );
+        }); //end of promise
+
+        const fileRef = await firebase.storage().refFromURL(d);
+
+        // //delete the old image in the storage
+        await storageRef
+          .child(document.getElementById("oldImage").value)
+          .delete()
+          .catch((err) => {
+            console.log(err);
+          });
+        console.log("Previous Image deleted successfully");
+        let post = {
+          title: document.getElementById("editTitle").value,
+          content: document.getElementById("editContent").value,
+          postImage: d,
+          fileref: fileRef._delegate._location.path_,
+        };
+        await firebase
+          .firestore()
+          .collection("posts")
+          .doc(postId)
+          .set(post, { merge: true });
+        location.reload();
+      } else {
+        await firebase
+          .firestore()
+          .collection("posts")
+          .doc(postId)
+          .set(
+            {
+              title: document.getElementById("editTitle").value,
+              content: document.getElementById("editContent").value,
+            },
+            { merge: true }
+          );
+        location.reload();
+      }
+    } else {
+      console.log("Please fill in all inputs");
+    }
+  });
+};
+
+// DELETE POST - #7 Youtube Video
+const deletePost = async () => {
+  console.log("delete button triggered");
+  const postId = getPostIDFromURL();
+  let post = await firebase
+    .firestore()
+    .collection("posts")
+    .doc(postId)
+    .get()
+    .catch((err) => console.log(err));
+
+  //delete the image
+  const storageRef = firebase.storage().ref();
+  await storageRef
+    .child(post.data().fileref)
+    .delete()
+    .catch((err) => console.log(err));
+
+  //delete the document of postId
+  await firebase.firestore().collection("posts").doc(postId).delete();
+  window.location.replace("index.html");
 };
