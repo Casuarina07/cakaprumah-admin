@@ -104,7 +104,12 @@ if (createForm != null) {
 //Check if the DOM is full loaded
 document.addEventListener("DOMContentLoaded", (e) => {
   getPosts();
-  getPost();
+  if (
+    !location.href.includes("index.html") &&
+    !location.href.includes("create.html")
+  ) {
+    getPost();
+  }
 });
 
 const openNav = document.querySelector("#openNav");
@@ -142,7 +147,6 @@ const createChildren = async (arr) => {
   //check if the post element is in the current HTML
   if (posts != null) {
     arr.map((post) => {
-
       let div = document.createElement("div");
       let cover = document.createElement("div");
       let anchor = document.createElement("a");
@@ -169,13 +173,16 @@ const deleteButton = document.querySelector("#delete");
 const editButton = document.querySelector("#edit");
 const singlePost = document.querySelector("#singlePost");
 const buttonsContainer = document.querySelector("#buttons"); //both the delete and edit button
+let currentTitle;
+let currentId;
+let currentContent;
+let oldImage;
 
 const getPost = async () => {
   let postID = getPostIDFromURL();
 
   //if loading element exist in the current HTML document
   if (loading != null) {
-    // loading.style.display = "block";
     loader.style.display = "inline-block";
   }
 
@@ -185,6 +192,12 @@ const getPost = async () => {
     .doc(postID)
     .get()
     .catch((err) => console.log(err));
+
+  console.log(post.data());
+  currentId = post.id;
+  currentTitle = post.data().title;
+  currentContent = post.data().content;
+  oldImage = post.data().fileref;
 
   if (loading != null) {
     loading.style.display = "none";
@@ -238,7 +251,7 @@ const createChild = (postData) => {
 
     //If edit button, display the form
     editButton.addEventListener("click", (e) => {
-      appendEditForm(postData);
+      appendEditForm();
     });
 
     //if delete button is clicked
@@ -249,15 +262,15 @@ const createChild = (postData) => {
 };
 
 //EDITING POSTS - #5, #6 Youtube Video
-const appendEditForm = (postData) => {
+const appendEditForm = () => {
   console.log("entered appendEditForm");
   let editFormContainer = document.querySelector("#editFormContainer");
   editFormContainer.style.display = "block";
   singlePost.style.display = "none";
   buttonsContainer.style.display = "none";
-  document.getElementById("editTitle").value = postData.title;
-  document.getElementById("editContent").value = postData.content;
-  document.getElementById("oldImage").value = postData.fileref;
+  document.getElementById("editTitle").value = currentTitle;
+  document.getElementById("editContent").value = currentContent;
+  document.getElementById("oldImage").value = oldImage;
   const editProgressHandler = document.querySelector("#editProgressHandler");
   const editProgressBar = document.querySelector("#editProgressBar");
 
@@ -265,15 +278,12 @@ const appendEditForm = (postData) => {
   editSubmit.addEventListener("click", async (e) => {
     e.preventDefault();
     console.log("edit submit button triggered");
-    const postId = await getPostIDFromURL();
 
     if (
       document.getElementById("editTitle").value != "" &&
       document.getElementById("editContent").value != ""
     ) {
-      console.log("none is empty");
       if (document.getElementById("editImage").files[0] != undefined) {
-        console.log("entered here");
         const image = document.getElementById("editImage").files[0];
         const storageRef = firebase.storage().ref();
         const storageChild = storageRef.child(image.name);
@@ -316,7 +326,7 @@ const appendEditForm = (postData) => {
 
         // //delete the old image in the storage
         await storageRef
-          .child(document.getElementById("oldImage").value)
+          .child(oldImage)
           .delete()
           .catch((err) => {
             console.log(err);
@@ -331,14 +341,14 @@ const appendEditForm = (postData) => {
         await firebase
           .firestore()
           .collection("posts")
-          .doc(postId)
+          .doc(currentId)
           .set(post, { merge: true });
         location.reload();
       } else {
         await firebase
           .firestore()
           .collection("posts")
-          .doc(postId)
+          .doc(currentId)
           .set(
             {
               title: document.getElementById("editTitle").value,
@@ -357,22 +367,15 @@ const appendEditForm = (postData) => {
 // DELETE POST - #7 Youtube Video
 const deletePost = async () => {
   console.log("delete button triggered");
-  const postId = getPostIDFromURL();
-  let post = await firebase
-    .firestore()
-    .collection("posts")
-    .doc(postId)
-    .get()
-    .catch((err) => console.log(err));
 
   //delete the image
   const storageRef = firebase.storage().ref();
   await storageRef
-    .child(post.data().fileref)
+    .child(oldImage)
     .delete()
     .catch((err) => console.log(err));
 
   //delete the document of postId
-  await firebase.firestore().collection("posts").doc(postId).delete();
+  await firebase.firestore().collection("posts").doc(currentId).delete();
   window.location.replace("index.html");
 };
