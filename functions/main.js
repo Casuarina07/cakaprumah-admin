@@ -1,11 +1,12 @@
 const config = {
-  apiKey: "AIzaSyCEVsUFIsT74A_dTl8UaCMyJmxBMtRDwyY",
-  authDomain: "freelance-trial.firebaseapp.com",
-  projectId: "freelance-trial",
-  storageBucket: "freelance-trial.appspot.com",
-  messagingSenderId: "333533410713",
-  appId: "1:333533410713:web:0553e41275ed7d78a10f08",
-  measurementId: "G-YLPPNTZZTC",
+  apiKey: "AIzaSyAk8Ta3Hzl-MmHEhvB-LgHmJ_ueHL7IsL4",
+  authDomain: "cakaprumahsg-amir.firebaseapp.com",
+  databaseURL: "https://cakaprumahsg-amir-default-rtdb.firebaseio.com",
+  projectId: "cakaprumahsg-amir",
+  storageBucket: "cakaprumahsg-amir.appspot.com",
+  messagingSenderId: "271026251179",
+  appId: "1:271026251179:web:c08a567b194ae6ead89eee",
+  measurementId: "G-8XN8C70GYK",
 };
 
 firebase.initializeApp(config);
