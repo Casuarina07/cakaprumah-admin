@@ -87,7 +87,7 @@ if (createForm != null) {
         fileref: fileRef._delegate._location.path_, //image.jpg
       };
 
-      await firebase.firestore().collection("posts").add(post);
+      await firebase.firestore().collection("stories").add(post);
       console.log("post added successfully");
 
       if (postSubmit != null) {
@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
   getPosts();
   if (
     !location.href.includes("index.html") &&
-    !location.href.includes("create.html")
+    !location.href.includes("create-story.html")
   ) {
     getPost();
   }
@@ -133,7 +133,7 @@ const getPosts = async () => {
   let postsArray = [];
   let docs = await firebase
     .firestore()
-    .collection("posts")
+    .collection("stories")
     .get()
     .catch((err) => console.log(err));
 
@@ -189,7 +189,7 @@ const getPost = async () => {
 
   let post = await firebase
     .firestore()
-    .collection("posts")
+    .collection("stories")
     .doc(postID)
     .get()
     .catch((err) => console.log(err));
@@ -341,14 +341,14 @@ const appendEditForm = () => {
         };
         await firebase
           .firestore()
-          .collection("posts")
+          .collection("stories")
           .doc(currentId)
           .set(post, { merge: true });
         location.reload();
       } else {
         await firebase
           .firestore()
-          .collection("posts")
+          .collection("stories")
           .doc(currentId)
           .set(
             {
@@ -377,6 +377,6 @@ const deletePost = async () => {
     .catch((err) => console.log(err));
 
   //delete the document of postId
-  await firebase.firestore().collection("posts").doc(currentId).delete();
+  await firebase.firestore().collection("stories").doc(currentId).delete();
   window.location.replace("index.html");
 };
