@@ -11,7 +11,7 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&family=Poppins:wght@200&display=swap"
       rel="stylesheet"
     />
-    <title>Create Property Story</title>
+    <title>Create Property for Sale</title>
   </head>
   <body>
     <div class="toggler">
@@ -27,38 +27,75 @@
         </li>
 
         <li>
-          <a href="create-sale.html">New Propery for Sale</a>
+          <a href="create-story.html">New Propery Story</a>
         </li>
       </ul>
     </nav>
 
     <header>
-      <h1>Create a New Property Story</h1>
+      <h1>Create a New Property for Sale</h1>
     </header>
 
     <main id="main">
       <form method="POST" id="createForm" action="post.html">
-        <p>Fill the respective fields to create a new story</p>
+        <p>Fill the respective fields to list a new property for sale</p>
         <input
           type="text"
-          id="title"
-          placeholder="Propery Story Title"
+          id="sale-title"
+          placeholder="Property for Sale title"
+          style="width: 40%; padding: 10px 10px"
+        />
+        <br />
+        <br />
+        <input
+          type="text"
+          id="sale-location"
+          placeholder="Property for Sale Location "
+          style="width: 40%; padding: 10px 10px"
+        />
+        <br />
+        <br />
+        <input
+          type="number"
+          id="sale-baths"
+          placeholder="Number of toilets in the unit"
+          style="width: 40%; padding: 10px 10px"
+        />
+        <br />
+        <br />
+        <input
+          type="number"
+          id="sale-rooms"
+          placeholder="Number of rooms in the unit"
+          style="width: 40%; padding: 10px 10px"
+        />
+        <br />
+        <br />
+        <input
+          type="number"
+          id="sale-size"
+          placeholder="Size of unit (sq ft)"
           style="width: 40%; padding: 10px 10px"
         />
         <br />
         <br />
         <textarea
-          id="content"
+          id="sale-content"
           cols="30"
           rows="10"
-          placeholder="Property Story Content"
+          placeholder="Property Description"
         ></textarea>
         <br />
         <br />
-        <input type="file" id="postImage" accept="image/x-png,image/jpeg" />
+        <input
+          type="file"
+          id="sale-postImage"
+          accept="image/x-png,image/jpeg"
+          multiple
+        />
         <br />
-        <br />  
-        <input type="submit" name="" id="postSubmit" value="Submit" />
+        <br />
+        <input type="submit" name="" id="saleSubmit" value="Submit" />
       </form>
       <div id="progressHandler">
         <p>Processing request...</p>
